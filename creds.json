@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "zoom-automation-338011",
+  "private_key_id": "7fa39af30aa11273d425f1999b7c240e0864ce14",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvgIBADANBgkqhkiG9w0BAQEFAASCBKgwggSkAgEAAoIBAQC1bXPKTneCVs5/\nWRpLqHzg0FlEg6BRl5f8UBQgVXv3pDA5k/mg0X+8eGJP7PqCeWUhHIu0AqGk+sU5\nXJnSl5yGF1Cp4LZf0oRW3sZ7mpx+GvTIH7mIeVjiQ8FMblpI4BHioj/2rG9DMCMG\nWCglxewFz5k+3NGZjOj4sTlP6j6RA7GveghU5WLoGytzAHIGkWkpnRXQAcyLlY5a\nHW/N/dke9XuADdUJrwzityx+cD8e7d8skHit2/hdDAMFx1bv3e4JpFEM3b4jB/DE\nEyk7WLOcxE4fAVNHUN9L45dXtek++Q15vrp1YCEb+HgxG4FiyNJWKU3ZH3DNVjjs\nXZXfg7DvAgMBAAECggEAJaeb2qdCgpjFrwStQnqrwHU9scyn34dZEhMEullDq3g2\nUhz2OHyCyHkr3m7O53mOlbq4/Bl3tygc+vTPMDgrUmFQapGrCGRG90ixZUIHrNyn\nZUnAViTpX7y0R8q3jlyDGciXAflz9jvtaQmu+3gCrooRwkxObFIkoEkYHg/+AFar\nLEQUVnLsj4SeK1qhF8qo3T3yzH66+hno0KP3hTZJdldnOrFHLBvfUV4esLFWylxB\nadAlgN6sAwxVhW8yPQF8d/i7C9yKzb4nV6Iajs0wbTj8YKKSevp75QLa9ExF1n0R\nu5kHbNXqVcXr6ZoX7LK6QMfClW31BhrqY99/f5K9sQKBgQD/oFkUu7fsia6HNQNx\n9XWhUrUMn6d+qwIC3D+Wm9r3xhEhAKg6jPDwxKAFv/q3TRvIWaGsIY0trPlo3Jor\n3D1kW3lITOBXNk2ESWYy9kZlc/r5C98bDevpkOXIC5MrjF/gJq0vwZE8QiviwajS\neMmvUJQCQKmKi1NhHnZWEflpewKBgQC1sVcRlrUHNIHW8iAmJvH8dtR2JxoPYG2M\nHwhq/zX9TZVQe7LPC9+owrUYFgzllx4qvCsALFGPhUSKsc0551QFwcteL2D9Ly9k\np13V/nX0+pLfYHgYugjyk/sQBOUU5hMrR3+MeV0BnWEyyS9tQJj1te74KNffLhmR\ns3GEtFDaHQKBgQDbsu6c+TF8ZGDR5+hMG1C8FB9y+Ay2uzcBSlaElPM/HMY//RaZ\nK+UwqW13Q6axv93u9coT7MovxYiebWs74xAInu3ADAKMMimxVnw1tKCQNXwwa9mW\noQJvPY+fvQMB3KXSOquCbfTrO1wIibUVH6cHvFNZFEYiwtgokkvWcaBQ3QKBgQCd\nyhQ2Zy5xwmzcEcxPtdTDjyM2NQERx4l7fdveqCLoB3+btMF1w/cJ5YZGE6hBnzqI\nnH+vl82BGZiL5pu3JKm4kjOeaQEO//JltF/unx0rko0IxwulVbK9kDwiDk4wFxsg\no+gmQ6O86kNmSogQlmAAS27sPvQykyOLgE4elEX/FQKBgFJ5AXW2LsMOXcGnBFul\n3moLvaf5Gg+9nbJ2gATBIQle/5F0EFdaeUxhyUCdaMq2U3XiImqmsgE+KLUrp2Dg\n/zHcwzo+/KDyC+w5mutAj/g2/j07D3xKu0+INVQyGJo4aaP01J3Ee0Z3TcWqNu39\nGxBFT7ST9o3MBOYPIMfjPHIZ\n-----END PRIVATE KEY-----\n",
+  "client_email": "zoomsra09@zoom-automation-338011.iam.gserviceaccount.com",
+  "client_id": "114182896650552576820",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/zoomsra09%40zoom-automation-338011.iam.gserviceaccount.com"
+}
