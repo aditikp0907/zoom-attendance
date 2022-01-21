@@ -1,9 +1,18 @@
 import flask
 from flask import request
-
+from dotenv import load_dotenv
+import requests
 import gspread
 from google.oauth2.service_account import Credentials
-from pprint import pprint
+import os
+import datetime
+
+
+load_dotenv()
+# .env
+whatsapp_api_url = os.getenv('whatsapp_api_url')
+group_jid = os.getenv('group_jid')
+
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 
@@ -19,22 +28,24 @@ app.config["DEBUG"] = True
 
 
 def updateAttendence(email):
-
     try:
-        spreadsheet = client.open_by_key('1BxrOnp_RHHjhMAOhFnLyo4qQQ8aSFG2_MPlESqWuPWw')
+        spreadsheet = client.open_by_key(
+            '1BxrOnp_RHHjhMAOhFnLyo4qQQ8aSFG2_MPlESqWuPWw')
         sheet1 = spreadsheet.worksheet("Sheet1")
         sheet1_data = sheet1.get_all_records()
 
         for i, row in enumerate(sheet1_data):
-            #find email in google sheet
+            # find email in google sheet
             if row['Email'] == email:
-                #mark attendance
-                sheet1.update_cell(i+2 , 3, 'P')
+                # mark attendance
+                sheet1.update_cell(i+2, 3, 'P')
+                # get absent users
+                getAbsentUser()
             else:
                 print(f"{row['Email']} not found")
 
-    except:
-        print("Exception thrown. x does not exist.")
+    except Exception as e:
+        print(f"error {e}")
 
 
 @app.route('/hello-world', methods=['GET'])
@@ -42,34 +53,69 @@ def hello_world():
     return "Hello World"
 
 
-@app.route('/zoom', methods=['GET', 'POST'])
+@app.route('/zoom', methods=['POST'])
 def log_attendence():
-    data = request.json
-
-    obj = data['payload']['object']
-    user = obj['participant']
-
-    if data['event'] == 'meeting.participant_joined':
-        try:
+    try:
+        data = request.json
+        obj = data['payload']['object']
+        user = obj['participant']
+        
+        if data['event'] == 'meeting.participant_joined':
             updateAttendence(user['email'])
-        except:
-            return "failed ", 400
+
+    except Exception as e:
+        print(f"error {e}")
 
     return "Ok", 200
 
 
-#function- getAbsentUsers()
-# get name and angel name
+@app.route('/getAbsentUsers', methods=['GET'])
+def getAbsentUserRoute():
+    getAbsentUser()
+    return "Ok", 200
 
-#cronjob
-#every 1 minute call getAbsentUsers() and send message on Whatsapp useing POST req
+def sendToWhatsapp(messageToSend):
+    try:
+        requests.post(whatsapp_api_url, data={
+            "message": f"{messageToSend}", "chatJid": group_jid})
+        print('message sent')
+        return "OK"
+    except Exception as e:
+        print(f"error {e}")
+        print("An exception occurred. unable to send message")
+        print(messageToSend)
+        return "Failed"
 
 
+def getAbsentUser():
+    try:
+        spreadsheet = client.open_by_key(
+            '1BxrOnp_RHHjhMAOhFnLyo4qQQ8aSFG2_MPlESqWuPWw')
+        sheet1 = spreadsheet.worksheet("Sheet1")
+        sheet1_data = sheet1.get_all_records()
 
-# @app.errorhandler(Exception)
-# def all_exception_handler(error):
-#     return 'Internal Error', 500
+        messageToSend = '*yet to join*\n'
+        todayDate = datetime.datetime.now().date()
+
+        for i, row in enumerate(sheet1_data):
+            # find email in google sheet
+            if row[str(todayDate)] == 'A':
+                # user is absent
+                messageToSend += f"\n{row['Name']} - {row['Angel']}"
+            else:
+                # user is present
+                print(f"{row['Name']} present")
+
+        # send message on whatsapp
+        sendToWhatsapp(messageToSend)
+    except Exception as e:
+        print(f"error {e}")
+
+
+@app.errorhandler(Exception)
+def all_exception_handler(error):
+    return 'Internal Error', 500
 
 
 if __name__ == '__main__':
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="0.0.0.0", port=5982)
