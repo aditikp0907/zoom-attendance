@@ -6,7 +6,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 import os
 import datetime
-
+import json
 
 load_dotenv()
 # .env
@@ -57,21 +57,23 @@ def hello_world():
 
 @app.route('/zoom', methods=['POST'])
 def log_attendence():
-    try:
-        data = request.json
-        obj = data['payload']['object']
-        user = obj['participant']
-        zoomMeetinId=obj['id']
-        if(zoomMeetinId==meeting_id):
-             if data['event'] == 'meeting.participant_joined':
-                updateAttendence(user['email'])
-       
+    if(request.headers['authorization']=='Q7PG2W_NQyOgwTrIDEs7Lw'):
+        try:
+            data = request.json
+            obj = data['payload']['object']
+            user = obj['participant']
+            zoomMeetinId=obj['id']
+            if(zoomMeetinId==meeting_id):
+                if data['event'] == 'meeting.participant_joined':
+                    updateAttendence(user['email'])
+        
+        except Exception as e:
+            print(f"error {e}")
 
-    except Exception as e:
-        print(f"error {e}")
-
-    return "Ok", 200
-
+        
+    else:
+        print('invalid headers')
+    return "", 200
 
 @app.route('/getAbsentUsers', methods=['GET'])
 def getAbsentUserRoute():
