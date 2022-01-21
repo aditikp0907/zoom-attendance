@@ -13,6 +13,7 @@ load_dotenv()
 whatsapp_api_url = os.getenv('whatsapp_api_url')
 group_jid = os.getenv('group_jid')
 
+sheetId = '1BxrOnp_RHHjhMAOhFnLyo4qQQ8aSFG2_MPlESqWuPWw'
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 
@@ -30,7 +31,7 @@ app.config["DEBUG"] = True
 def updateAttendence(email):
     try:
         spreadsheet = client.open_by_key(
-            '1BxrOnp_RHHjhMAOhFnLyo4qQQ8aSFG2_MPlESqWuPWw')
+            sheetId)
         sheet1 = spreadsheet.worksheet("Sheet1")
         sheet1_data = sheet1.get_all_records()
 
@@ -59,7 +60,7 @@ def log_attendence():
         data = request.json
         obj = data['payload']['object']
         user = obj['participant']
-        
+
         if data['event'] == 'meeting.participant_joined':
             updateAttendence(user['email'])
 
@@ -73,6 +74,7 @@ def log_attendence():
 def getAbsentUserRoute():
     getAbsentUser()
     return "Ok", 200
+
 
 def sendToWhatsapp(messageToSend):
     try:
@@ -90,7 +92,7 @@ def sendToWhatsapp(messageToSend):
 def getAbsentUser():
     try:
         spreadsheet = client.open_by_key(
-            '1BxrOnp_RHHjhMAOhFnLyo4qQQ8aSFG2_MPlESqWuPWw')
+            sheetId)
         sheet1 = spreadsheet.worksheet("Sheet1")
         sheet1_data = sheet1.get_all_records()
 
