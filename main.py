@@ -12,7 +12,6 @@ load_dotenv()
 # .env
 whatsapp_api_url = os.getenv('whatsapp_api_url')
 group_jid = os.getenv('group_jid')
-meeting_id = os.getenv('meeting_id')
 
 sheetId = '1BxrOnp_RHHjhMAOhFnLyo4qQQ8aSFG2_MPlESqWuPWw'
 
@@ -45,7 +44,7 @@ def updateAttendence(email):
                 # get absent users
                 getAbsentUser()
             else:
-                print(f"{row['Email']} not found")
+                print(f"{row['Email']}not found")
 
     except Exception as e:
         print(f"error {e}")
@@ -56,28 +55,14 @@ def hello_world():
     return "Hello World"
 
 
-@app.route('/zoom', methods=['POST'])
+@app.route('/updateAttendance', methods=['POST'])
 def log_attendence():
-    if(request.headers['authorization']=='Q7PG2W_NQyOgwTrIDEs7Lw'):
-        try:
-            data = request.json
-            obj = data['payload']['object']
-            user = obj['participant']
-            zoomMeetinId=obj['id']
-            
-            #check meeting id
-            if(zoomMeetinId==meeting_id):
-                if data['event'] == 'meeting.participant_joined':
-                    updateAttendence(user['email'])
-            else:
-                #skip
-        
-        except Exception as e:
-            print(f"error {e}")
-  
-    else:
-        #skip
-        print('invalid headers')
+    try:
+        data = request.json
+        email=data['email']
+        updateAttendence(email)
+    except Exception as e:
+        print(f"error {e}")
     return "", 200
 
 
