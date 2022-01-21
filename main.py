@@ -12,6 +12,7 @@ load_dotenv()
 # .env
 whatsapp_api_url = os.getenv('whatsapp_api_url')
 group_jid = os.getenv('group_jid')
+meeting_id = os.getenv('meeting_id')
 
 sheetId = '1BxrOnp_RHHjhMAOhFnLyo4qQQ8aSFG2_MPlESqWuPWw'
 
@@ -60,9 +61,11 @@ def log_attendence():
         data = request.json
         obj = data['payload']['object']
         user = obj['participant']
-
-        if data['event'] == 'meeting.participant_joined':
-            updateAttendence(user['email'])
+        zoomMeetinId=obj['id']
+        if(zoomMeetinId==meeting_id):
+             if data['event'] == 'meeting.participant_joined':
+                updateAttendence(user['email'])
+       
 
     except Exception as e:
         print(f"error {e}")
