@@ -41,6 +41,7 @@ def updateAttendence(email):
             if row['Email'] == email:
                 # mark attendance
                 sheet1.update_cell(i+2, 3, 'P')
+                print(f"{email} marked pressed")
                 # get absent users
                 getAbsentUser()
             else:
@@ -63,22 +64,21 @@ def log_attendence():
             obj = data['payload']['object']
             user = obj['participant']
             zoomMeetinId=obj['id']
+            
+            #check meeting id
             if(zoomMeetinId==meeting_id):
                 if data['event'] == 'meeting.participant_joined':
                     updateAttendence(user['email'])
+            else:
+                #skip
         
         except Exception as e:
             print(f"error {e}")
-
-        
+  
     else:
+        #skip
         print('invalid headers')
     return "", 200
-
-@app.route('/getAbsentUsers', methods=['GET'])
-def getAbsentUserRoute():
-    getAbsentUser()
-    return "Ok", 200
 
 
 def sendToWhatsapp(messageToSend):
@@ -88,8 +88,7 @@ def sendToWhatsapp(messageToSend):
         print('message sent')
         return "OK"
     except Exception as e:
-        print(f"error {e}")
-        print("An exception occurred. unable to send message")
+        print(f"error unable to send message{e}")
         print(messageToSend)
         return "Failed"
 
@@ -109,9 +108,10 @@ def getAbsentUser():
             if row[str(todayDate)] == 'A':
                 # user is absent
                 messageToSend += f"\n{row['Name']} - {row['Angel']}"
+                print(f"{row['Name']} is absent")
             else:
                 # user is present
-                print(f"{row['Name']} present")
+                print(f"{row['Name']} is present")
 
         # send message on whatsapp
         sendToWhatsapp(messageToSend)
