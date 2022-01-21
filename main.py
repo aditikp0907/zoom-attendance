@@ -85,7 +85,7 @@ def getAbsentUser():
         sheet1 = spreadsheet.worksheet("Sheet1")
         sheet1_data = sheet1.get_all_records()
 
-        messageToSend = '*yet to join*\n'
+        messageToSend = '*Yet to join*\n'
         todayDate = datetime.datetime.now().date()
 
         for i, row in enumerate(sheet1_data):
