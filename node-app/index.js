@@ -2,11 +2,13 @@ const express = require('express')
 const app = express()
 const port = 5983
 const awaitRequest = require('./await-request');
-
+require('dotenv').config({ path: './.env' })
 const bodyParser = require('body-parser');
 
 const VERIFICATION_TOKEN = "Q7PG2W_NQyOgwTrIDEs7Lw";
-const zoomMeetingId = 85138039085
+
+const zoomMeetingId = process.env.meetingId
+
 
 
 app.post('/zoomEndpoint', bodyParser.raw({ type: 'application/json' }), async (req, res) => {
