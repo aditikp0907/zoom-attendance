@@ -13,7 +13,7 @@ load_dotenv()
 whatsapp_api_url = os.getenv('whatsapp_api_url')
 group_jid = os.getenv('group_jid')
 
-sheetId = '1BxrOnp_RHHjhMAOhFnLyo4qQQ8aSFG2_MPlESqWuPWw'
+sheetId = os.getenv('sheet_id')
 
 scope = ['https://www.googleapis.com/auth/spreadsheets']
 
@@ -34,17 +34,25 @@ def updateAttendence(email):
             sheetId)
         sheet1 = spreadsheet.worksheet("Sheet1")
         sheet1_data = sheet1.get_all_records()
-
+        todayDate = datetime.datetime.now().date()
+        
+        headers = sheet1.row_values(1)
+        
+        enumerated_headers = list(enumerate(headers))
+       
+        lookup_table = dict(enumerated_headers)
+ 
+        lookup_table_reversed = {value: key for key, value in lookup_table.items()}
+        
+        columnNumber=lookup_table_reversed[str(todayDate)]
         for i, row in enumerate(sheet1_data):
             # find email in google sheet
             if row['Email'] == email:
                 # mark attendance
-                sheet1.update_cell(i+2, 3, 'P')
+                sheet1.update_cell(i+2, columnNumber +1, 'P')
                 print(f"{email} marked pressed")
                 # get absent users
                 getAbsentUser()
-            else:
-                print(f"{row['Email']}not found")
 
     except Exception as e:
         print(f"error {e}")
@@ -84,7 +92,6 @@ def getAbsentUser():
             sheetId)
         sheet1 = spreadsheet.worksheet("Sheet1")
         sheet1_data = sheet1.get_all_records()
-
         messageToSend = '*Yet to join*\n'
         todayDate = datetime.datetime.now().date()
 
@@ -97,8 +104,8 @@ def getAbsentUser():
             else:
                 # user is present
                 print(f"{row['Name']} is present")
-
-        # send message on whatsapp
+                
+        #send message on whatsapp
         sendToWhatsapp(messageToSend)
     except Exception as e:
         print(f"error {e}")
