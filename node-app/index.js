@@ -5,7 +5,7 @@ const awaitRequest = require('./await-request');
 require('dotenv').config({ path: './.env' })
 const bodyParser = require('body-parser');
 
-const VERIFICATION_TOKEN = "Q7PG2W_NQyOgwTrIDEs7Lw";
+const VERIFICATION_TOKEN = process.env.token;
 
 const zoomMeetingId = process.env.meetingId
 
