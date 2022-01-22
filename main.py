@@ -97,14 +97,15 @@ def getAbsentUser():
 
         for i, row in enumerate(sheet1_data):
             # find email in google sheet
-            if row[str(todayDate)] == 'A':
-                # user is absent
-                messageToSend += f"\n{row['Name']} - {row['Angel']}"
-                print(f"{row['Name']} is absent")
-            else:
-                # user is present
-                print(f"{row['Name']} is present")
-                
+            get_part_of_day= "M" if datetime.datetime.now().hour<12 else "E" 
+            if(row['Batch']==get_part_of_day):
+                if row[str(todayDate)] == 'A':
+                    # user is absent
+                    messageToSend += f"\n{row['Name']} - {row['Angel']}"
+                    print(f"{row['Name']} is absent")
+                else:
+                    # user is present
+                    print(f"{row['Name']} is present") 
         #send message on whatsapp
         sendToWhatsapp(messageToSend)
     except Exception as e:
