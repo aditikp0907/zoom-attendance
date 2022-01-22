@@ -17,7 +17,6 @@ app.post('/zoomEndpoint', bodyParser.raw({ type: 'application/json' }), async (r
     }
     Response(200, 'Participant Joined')
     let eventObj;
-
     try {
         eventObj = JSON.parse(req.body);
         if (req.headers.authorization === VERIFICATION_TOKEN) {
