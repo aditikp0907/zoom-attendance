@@ -48,11 +48,17 @@ def updateAttendence(email):
         for i, row in enumerate(sheet1_data):
             # find email in google sheet
             if row['Email'] == email:
-                # mark attendance
-                sheet1.update_cell(i+2, columnNumber +1, 'P')
-                print(f"{email} marked pressed")
-                # get absent users
-                getAbsentUser()
+                todayDate = datetime.datetime.now().date()
+                if row[str(todayDate)]!='P':
+                    # mark attendance
+                    sheet1.update_cell(i+2, columnNumber +1, 'P')
+                    print(f"{email} marked pressed")
+                    # get absent users
+                    getAbsentUser()
+                else:
+                    print(f"{email} is already pressed")
+                
+                
 
     except Exception as e:
         print(f"error {e}")
